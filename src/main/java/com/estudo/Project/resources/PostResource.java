@@ -3,6 +3,7 @@ package com.estudo.Project.resources;
 import com.estudo.Project.domain.Post;
 import com.estudo.Project.domain.User;
 import com.estudo.Project.dto.UserDTO;
+import com.estudo.Project.resources.util.URL;
 import com.estudo.Project.services.PostService;
 import com.estudo.Project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,13 @@ public class PostResource {
 	public ResponseEntity<Post> findById(@PathVariable String id) {
 		Post obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
+	}
+
+	@GetMapping(value ="/titlesearch")
+	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value="text", defaultValue ="") String text) {
+		text = URL.decodeParam(text);
+		List<Post> list = service.findByTitle(text);
+		return ResponseEntity.ok().body(list);
 	}
 
 }
